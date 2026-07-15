@@ -238,11 +238,16 @@ a {
 ========================================= */
 .hero {
     position: relative;
+    /* Ajuste estrutural: Usa svh para mobile, com fallback vh */
     min-height: 100vh;
+    min-height: 100svh;
     display: flex;
     align-items: center;
     overflow: hidden;
     background-color: #040A12;
+    /* Safe Zones: Garante que o conteúdo nunca colida com a navbar (top) e o indicador de scroll (bottom) */
+    padding-top: 160px;
+    padding-bottom: 120px;
 }
 
 .hero-layer {
@@ -307,10 +312,11 @@ a {
     position: relative;
     z-index: 5;
     max-width: 860px;
-    transform: translateY(-20px);
+    /* Removido o translateY(-20px) absoluto. O alinhamento agora flui com os paddings estruturais */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
 }
 
 .hero-content p {
@@ -471,11 +477,9 @@ a {
 ========================================= */
 .cta-section {
     background-color: var(--background);
-    /* Respiro superior reduzido em ~30px (90px ao invés de 120px) para amarrar o ritmo */
     padding: 90px 0 160px;
 }
 
-/* Container estendido: ~15% maior que o container padrão (1120 -> 1280px) */
 .cta-card-container {
     max-width: 1280px;
 }
@@ -652,12 +656,17 @@ a {
     h1 { font-size: 2.75rem; }
     h2 { font-size: 2rem; }
     .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 32px; }
-    .hero-content { transform: translateY(0); }
+    
+    /* Hero no Mobile com as Safe Zones preservadas */
+    .hero {
+        padding-top: 140px;
+        padding-bottom: 100px;
+    }
+    
     .navbar { width: calc(100% - 32px); padding: 12px 24px; }
     .back-to-top { bottom: 24px; right: 24px; }
     .footer-container { flex-direction: column; gap: 32px; text-align: center; }
     
-    /* Mobile - mantém o CTA mais compacto horizontalmente */
     .cta-section { padding: 64px 0 80px; }
     .cta-card {
         padding: 80px 24px;
