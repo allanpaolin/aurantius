@@ -1,0 +1,247 @@
+/**
+ * AURANTIUS LABS - GERADOR DE PROPOSTAS
+ * style.css
+ */
+
+/* ==========================================================================
+   1. VARIÁVEIS GLOBAIS E INTERFACE DA FERRAMENTA
+   ========================================================================== */
+:root {
+    --aur-primary: #0B1F3A;
+    --aur-accent: #C9A227;
+    --aur-bg: #FFFFFF;
+    --aur-text-main: #111827;
+    --aur-text-muted: #4B5563;
+    --aur-border: rgba(11, 31, 58, 0.06);
+    --aur-border-strong: rgba(11, 31, 58, 0.15);
+    --aur-bg-alt: #F9FAFB;
+    --aur-error: #DC2626;
+    
+    --shadow-sm: 0 1px 2px rgba(11, 31, 58, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(11, 31, 58, 0.05), 0 2px 4px -1px rgba(11, 31, 58, 0.03);
+    --shadow-paper: 0 20px 40px -10px rgba(11, 31, 58, 0.1), 0 0 10px rgba(11, 31, 58, 0.02);
+    --transition: 0.2s ease-in-out;
+}
+
+/* Base Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body.tool-page { font-family: 'Inter', sans-serif; background-color: var(--aur-bg-alt); color: var(--aur-text-main); line-height: 1.5; }
+.hidden { display: none !important; }
+.container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+/* App Header & Wizard */
+.app-header { background-color: var(--aur-bg); border-bottom: 1px solid var(--aur-border); padding: 24px 0; position: sticky; top: 0; z-index: 100; }
+.header-container { display: flex; justify-content: space-between; align-items: center; }
+.back-link, .btn-text { color: var(--aur-text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; cursor: pointer; border: none; background: transparent; transition: color var(--transition); }
+.back-link:hover, .btn-text:hover { color: var(--aur-primary); }
+.app-title-group { text-align: center; }
+.labs-badge { display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aur-accent); font-weight: 600; margin-bottom: 4px; }
+.app-title { font-size: 1.25rem; font-weight: 600; color: var(--aur-primary); }
+.app-main { padding: 40px 0 80px 0; }
+
+.progress-nav { margin-bottom: 40px; background: var(--aur-bg); padding: 20px 30px; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--aur-border); }
+.progress-list { list-style: none; display: flex; justify-content: space-between; position: relative; }
+.progress-step { flex: 1; text-align: center; font-size: 0.875rem; font-weight: 500; color: var(--aur-text-muted); position: relative; padding-bottom: 10px; cursor: pointer; }
+.progress-list::before { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background-color: var(--aur-border); border-radius: 3px; z-index: 1; }
+.progress-step::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background-color: transparent; z-index: 2; transition: background-color var(--transition); }
+.progress-step.active { color: var(--aur-primary); font-weight: 600; }
+.progress-step.active::after { background-color: var(--aur-primary); }
+.progress-step.completed { color: var(--aur-primary); }
+.progress-step.completed::after { background-color: var(--aur-accent); }
+
+/* Seções e Formulários */
+.step-section { background: var(--aur-bg); padding: 40px; border-radius: 16px; box-shadow: var(--shadow-md); border: 1px solid var(--aur-border); margin-bottom: 30px; animation: fadeIn 0.3s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.step-header { margin-bottom: 32px; border-bottom: 1px solid var(--aur-border); padding-bottom: 20px; }
+.step-header h2 { font-size: 1.5rem; color: var(--aur-primary); margin-bottom: 8px; }
+.step-header p { color: var(--aur-text-muted); font-size: 0.95rem; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.form-group.full-width { grid-column: 1 / -1; }
+.form-group { display: flex; flex-direction: column; }
+.form-group label { font-size: 0.875rem; font-weight: 500; color: var(--aur-primary); margin-bottom: 8px; }
+.required { color: var(--aur-error); }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; font-family: inherit; font-size: 0.95rem; background-color: var(--aur-bg); border: 1px solid var(--aur-border-strong); border-radius: 8px; outline: none; transition: var(--transition); }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--aur-primary); box-shadow: 0 0 0 3px rgba(11, 31, 58, 0.1); }
+.form-group input:disabled { background-color: var(--aur-bg-alt); cursor: not-allowed; }
+.form-group textarea { resize: vertical; min-height: 80px; }
+.error-msg { color: var(--aur-error); font-size: 0.8rem; margin-top: 6px; font-weight: 500; }
+.help-text { font-size: 0.8rem; color: var(--aur-text-muted); margin-top: 4px; margin-bottom: 12px; display: block; }
+.checkbox-label { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.checkbox-label input { width: 18px; height: 18px; accent-color: var(--aur-primary); }
+
+/* Interface de Cores */
+.theme-selection-box { background: var(--aur-bg-alt); border: 1px solid var(--aur-border-strong); padding: 24px; border-radius: 12px; margin-bottom: 24px; }
+.theme-selection-box h3 { font-size: 1.1rem; color: var(--aur-primary); margin-bottom: 4px; }
+.theme-options { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.radio-label { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; cursor: pointer; }
+.radio-label input { width: 16px; height: 16px; accent-color: var(--aur-primary); }
+.color-pickers { display: flex; gap: 24px; flex-wrap: wrap; padding-top: 16px; border-top: 1px dashed var(--aur-border-strong); }
+.color-picker-group { display: flex; flex-direction: column; gap: 8px; }
+.color-picker-group label { font-size: 0.85rem; font-weight: 500; color: var(--aur-text-muted); }
+.color-picker-group input[type="color"] { width: 60px; height: 40px; padding: 0; border: 1px solid var(--aur-border-strong); border-radius: 6px; cursor: pointer; }
+
+/* Sugestões de Pagamento (Nova Feature UI) */
+.payment-suggestions { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 12px; }
+.payment-btn { background: var(--aur-bg); border: 1px solid var(--aur-border-strong); border-radius: 8px; padding: 12px 10px; font-size: 0.8rem; color: var(--aur-text-muted); cursor: pointer; transition: var(--transition); text-align: center; line-height: 1.4; }
+.payment-btn:hover { border-color: var(--aur-primary); color: var(--aur-primary); background: var(--aur-bg-alt); }
+.payment-btn.active { border-color: var(--aur-primary); background: var(--aur-primary); color: var(--aur-bg); font-weight: 500; }
+
+/* Botões Gerais */
+.form-actions { display: flex; justify-content: space-between; margin-top: 20px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; font-family: inherit; font-size: 0.95rem; font-weight: 500; border-radius: 8px; cursor: pointer; transition: var(--transition); border: none; }
+.btn-primary { background-color: var(--aur-primary); color: var(--aur-bg); }
+.btn-primary:hover { background-color: #081629; box-shadow: var(--shadow-md); }
+.btn-secondary { background-color: var(--aur-bg); color: var(--aur-primary); border: 1px solid var(--aur-border-strong); }
+.btn-secondary:hover { background-color: var(--aur-bg-alt); border-color: var(--aur-primary); }
+.btn-outline { background-color: transparent; color: var(--aur-primary); border: 1px dashed var(--aur-primary); }
+.btn-danger { color: var(--aur-error); }
+#btn-next, #btn-finish { margin-left: auto; }
+
+/* Upload, Serviços, Investimento (UI) */
+.logo-upload-group input[type="file"]::file-selector-button { background-color: var(--aur-bg-alt); border: 1px solid var(--aur-border-strong); color: var(--aur-primary); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.875rem; margin-right: 12px; }
+.logo-preview { margin-top: 16px; padding: 16px; border: 1px solid var(--aur-border); border-radius: 8px; display: inline-flex; flex-direction: column; align-items: center; gap: 12px; background: var(--aur-bg-alt); }
+#logo-preview-img { max-height: 80px; max-width: 200px; object-fit: contain; }
+.services-container { margin-bottom: 24px; }
+.table-responsive { overflow-x: auto; margin-bottom: 16px; border: 1px solid var(--aur-border-strong); border-radius: 8px; }
+.services-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+.services-table th, .services-table td { padding: 16px; border-bottom: 1px solid var(--aur-border); }
+.services-table th { background-color: var(--aur-bg-alt); color: var(--aur-primary); font-weight: 500; }
+.col-qty, .col-price, .col-total { text-align: right; width: 15%; }
+.col-actions { text-align: center; width: 10%; }
+.item-form-box { background: var(--aur-bg-alt); padding: 24px; border-radius: 8px; border: 1px solid var(--aur-border-strong); margin-top: 20px; }
+.item-form-actions { display: flex; justify-content: flex-end; gap: 16px; margin-top: 24px; }
+.investment-box { background: var(--aur-bg-alt); border: 1px solid var(--aur-border-strong); border-radius: 12px; padding: 30px; }
+.investment-row { display: flex; justify-content: space-between; padding: 12px 0; font-size: 1rem; color: var(--aur-text-muted); }
+.investment-value { font-weight: 500; color: var(--aur-text-main); }
+.discount-config { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px 0; border-top: 1px dashed var(--aur-border-strong); border-bottom: 1px dashed var(--aur-border-strong); margin: 10px 0; }
+.total-row { padding-top: 20px; font-size: 1.5rem; color: var(--aur-primary); }
+
+/* Modal & Toolbar */
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 31, 58, 0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal-content { background: var(--aur-bg); padding: 40px; border-radius: 16px; max-width: 500px; text-align: center; }
+.modal-content h2 { color: var(--aur-primary); margin-bottom: 12px; }
+.modal-actions { display: flex; justify-content: center; gap: 16px; margin-top: 30px;}
+.review-toolbar { display: flex; justify-content: space-between; align-items: center; background: var(--aur-bg); padding: 24px 32px; border-radius: 12px; margin-bottom: 30px; box-shadow: var(--shadow-sm); border: 1px solid var(--aur-border); }
+.toolbar-info h2 { font-size: 1.25rem; color: var(--aur-primary); }
+.toolbar-actions { display: flex; gap: 16px; }
+
+/* ==========================================================================
+   2. DOCUMENTO A4 - VARIÁVEIS DINÂMICAS E LAYOUT MESTRE
+   ========================================================================== */
+.a4-document-wrapper { background-color: #E5E7EB; padding: 40px 20px; border-radius: 8px; display: flex; justify-content: center; overflow-x: auto; }
+
+.a4-document {
+    --doc-primary: #0B1F3A;
+    --doc-primary-text: #FFFFFF;
+    --doc-contrast: #F9FAFB;
+    --doc-contrast-text: #111827;
+    --doc-accent: #C9A227;
+
+    background-color: white;
+    width: 100%;
+    max-width: 210mm;
+    min-height: 297mm;
+    box-shadow: var(--shadow-paper);
+    box-sizing: border-box;
+    font-size: 10pt;
+    line-height: 1.5;
+    color: var(--aur-text-main);
+}
+
+/* ==========================================================================
+   3. ESTRUTURA TABLE-PRINT (CABEÇALHOS/RODAPÉS EM MÚLTIPLAS PÁGINAS)
+   ========================================================================== */
+.doc-master-table { width: 100%; border-collapse: collapse; border: none; }
+.doc-master-table > thead > tr > td,
+.doc-master-table > tbody > tr > td,
+.doc-master-table > tfoot > tr > td { padding-left: 15mm; padding-right: 15mm; border: none; }
+.doc-master-table > thead > tr > td { padding-top: 15mm; }
+.doc-master-table > tfoot > tr > td { padding-bottom: 15mm; }
+
+.doc-header-compact { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--doc-primary); padding-bottom: 4mm; margin-bottom: 8mm; }
+.doc-header-brand { display: flex; align-items: center; gap: 15px; }
+.doc-logo-area img { max-height: 15mm; max-width: 45mm; object-fit: contain; }
+.doc-company-name { font-size: 12pt; font-weight: 600; color: var(--doc-primary); }
+.doc-header-meta { text-align: right; font-size: 8.5pt; color: var(--aur-text-muted); line-height: 1.4; }
+
+.doc-footer-compact { margin-top: 10mm; padding-top: 3mm; border-top: 1px solid rgba(11, 31, 58, 0.1); text-align: center; font-size: 8pt; color: var(--aur-text-muted); }
+
+/* ==========================================================================
+   4. CORPO DO DOCUMENTO (Blocos e Hierarquia)
+   ========================================================================== */
+.doc-title-section { margin-bottom: 10mm; display: flex; justify-content: space-between; align-items: flex-start; }
+.doc-client-data h3 { font-size: 9pt; color: var(--aur-text-muted); font-weight: 500; text-transform: uppercase; margin-bottom: 1mm; }
+.doc-client-data h2 { font-size: 14pt; color: var(--doc-primary); margin-bottom: 1mm; }
+.doc-client-data p { font-size: 10pt; }
+
+.doc-proposal-title-area { text-align: right; }
+.doc-proposal-title-area h1 { font-size: 16pt; color: var(--doc-accent); margin-bottom: 2mm; text-transform: uppercase; }
+.doc-proposal-metadata { font-size: 9pt; color: var(--aur-text-muted); }
+
+.doc-text-section, .doc-conditions-section, .doc-scope-section, .doc-investment-section { margin-bottom: 10mm; }
+.doc-block { margin-bottom: 6mm; }
+.doc-block h3, .doc-scope-section h3, .doc-investment-section h3 { font-size: 11pt; color: var(--doc-primary); margin-bottom: 2mm; padding-bottom: 1mm; border-bottom: 1px solid rgba(11, 31, 58, 0.1); }
+.doc-content { white-space: pre-wrap; font-size: 10pt; }
+
+.doc-investment-summary, .doc-acceptance-section { background-color: var(--doc-contrast); color: var(--doc-contrast-text); padding: 6mm; border-radius: 4px; }
+
+.doc-table { width: 100%; border-collapse: collapse; margin-bottom: 5mm; }
+.doc-table th { background-color: var(--doc-primary); color: var(--doc-primary-text); padding: 2.5mm; text-align: left; font-weight: 500; font-size: 9pt; }
+.doc-table td { padding: 2.5mm; border-bottom: 1px solid rgba(11, 31, 58, 0.08); font-size: 10pt; }
+.doc-table .col-item span { font-size: 8.5pt; color: var(--aur-text-muted); }
+.doc-table .col-qty, .doc-table .col-price, .doc-table .col-total { text-align: right; }
+
+.doc-investment-summary { width: 60%; margin-left: auto; }
+.summary-line { display: flex; justify-content: space-between; padding: 1.5mm 0; font-size: 10pt; }
+.summary-line.total-line { border-top: 1px solid rgba(11, 31, 58, 0.1); margin-top: 1.5mm; padding-top: 2.5mm; font-size: 12pt; font-weight: 600; color: var(--doc-primary); }
+
+.doc-acceptance-section { margin-bottom: 10mm; margin-top: 10mm; }
+.doc-acceptance-section h3 { border: none; font-size: 12pt; margin-bottom: 1mm; }
+.signature-box { display: flex; gap: 15mm; margin-top: 12mm; }
+.signature-line { flex: 1; text-align: center; }
+.signature-line .line { border-bottom: 1px solid var(--doc-contrast-text); margin-bottom: 2mm; }
+.signature-line span { font-size: 8.5pt; opacity: 0.8; }
+.signature-details { flex: 1; font-size: 9pt; line-height: 2; }
+
+/* ==========================================================================
+   5. RESPONSIVIDADE E MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 992px) {
+    .review-toolbar { flex-direction: column; text-align: center; gap: 20px; }
+    .toolbar-actions { width: 100%; justify-content: center; flex-wrap: wrap; }
+}
+@media (max-width: 768px) {
+    .form-grid, .color-pickers { grid-template-columns: 1fr; }
+    .progress-list { justify-content: flex-start; overflow-x: auto; padding-bottom: 10px; }
+    .progress-step { min-width: 120px; flex: none; }
+    .discount-config { grid-template-columns: 1fr; gap: 12px; }
+    .app-header { padding: 16px 0; }
+    .step-section { padding: 24px; }
+    .payment-suggestions { grid-template-columns: 1fr 1fr; } /* Adaptar cards no mobile */
+}
+@media (max-width: 576px) {
+    .header-container { flex-direction: column; gap: 12px; }
+    .app-title-group { order: -1; }
+    .back-link { align-self: flex-start; }
+    .payment-suggestions { grid-template-columns: 1fr; } /* Coluna única em telas muito pequenas */
+}
+
+/* ==========================================================================
+   6. IMPRESSÃO (@media print)
+   ========================================================================== */
+@page { size: A4 portrait; margin: 0; }
+@media print {
+    body { background-color: white !important; }
+    .screen-only { display: none !important; }
+    .app-main { padding: 0 !important; }
+    .a4-document-wrapper { padding: 0 !important; background: transparent !important; display: block !important; overflow: visible !important; }
+    .a4-document { box-shadow: none !important; margin: 0 !important; width: 100% !important; max-width: none !important; min-height: auto !important; }
+    
+    .doc-master-table > thead { display: table-header-group; }
+    .doc-master-table > tfoot { display: table-footer-group; }
+    .doc-master-table > tbody { display: table-row-group; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .doc-block, .doc-scope-section tr, .doc-investment-section, .doc-acceptance-section, .doc-title-section { page-break-inside: avoid; break-inside: avoid; }
+    h2, h3 { page-break-after: avoid; break-after: avoid; }
+}

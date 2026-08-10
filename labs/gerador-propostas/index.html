@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Gerador de Propostas | Aurantius Labs</title>
+    <meta name="description" content="Estruture e exporte propostas comerciais elegantes e padronizadas diretamente pelo navegador.">
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/site.webmanifest">
+    
+    <!-- Tipografia: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS: Global e Local -->
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="tool-page">
+
+    <!-- Modal de Recuperação -->
+    <div id="recovery-modal" class="modal hidden screen-only">
+        <div class="modal-content">
+            <h2>Proposta em andamento</h2>
+            <p>Encontramos uma proposta não finalizada salva no seu navegador.</p>
+            <div class="modal-actions">
+                <button type="button" id="btn-start-new" class="btn btn-secondary">Começar nova</button>
+                <button type="button" id="btn-continue" class="btn btn-primary">Continuar de onde parei</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CABEÇALHO DO APLICATIVO -->
+    <header class="app-header screen-only">
+        <div class="container header-container">
+            <a href="https://aurantius.com.br/labs/" class="back-link">&larr; Voltar para o Labs</a>
+            <div class="app-title-group">
+                <span class="labs-badge">Aurantius Labs</span>
+                <h1 class="app-title">Gerador de Propostas</h1>
+            </div>
+            <button type="button" id="btn-reset-app" class="btn-text">Limpar dados</button>
+        </div>
+    </header>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="app-main">
+        <div class="container app-container">
+
+            <!-- INDICADOR DE PROGRESSO -->
+            <nav class="progress-nav screen-only" aria-label="Progresso da proposta">
+                <ul class="progress-list" id="progress-list">
+                    <li class="progress-step active" data-step="1"><span>1. Empresa</span></li>
+                    <li class="progress-step" data-step="2"><span>2. Cliente</span></li>
+                    <li class="progress-step" data-step="3"><span>3. Proposta</span></li>
+                    <li class="progress-step" data-step="4"><span>4. Serviços</span></li>
+                    <li class="progress-step" data-step="5"><span>5. Investimento</span></li>
+                    <li class="progress-step" data-step="6"><span>6. Condições</span></li>
+                    <li class="progress-step" data-step="7"><span>7. Revisar</span></li>
+                </ul>
+            </nav>
+
+            <!-- FORMULÁRIO DO GERADOR -->
+            <form id="proposal-form" class="proposal-form" novalidate>
+
+                <!-- ETAPA 1: SUA EMPRESA -->
+                <section id="step-1" class="step-section active screen-only">
+                    <header class="step-header">
+                        <h2>Sua Empresa</h2>
+                        <p>Informe os dados do emissor da proposta. Apenas os campos preenchidos aparecerão no documento.</p>
+                    </header>
+                    
+                    <div class="form-grid">
+                        <div class="form-group full-width logo-upload-group">
+                            <label for="company-logo">Logo da Empresa (PNG ou JPG)</label>
+                            <input type="file" id="company-logo" accept="image/png, image/jpeg">
+                            <div id="logo-preview-container" class="logo-preview hidden">
+                                <img id="logo-preview-img" src="" alt="Preview da Logo">
+                                <button type="button" id="btn-remove-logo" class="btn-text btn-danger">Remover logo</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="company-name">Nome da Empresa / Profissional <span class="required">*</span></label>
+                            <input type="text" id="company-name" name="companyName" required placeholder="Ex: Aurantius Labs">
+                            <span class="error-msg hidden">Este campo é obrigatório.</span>
+                        </div>
+                        <div class="form-group"><label for="company-cnpj">CNPJ / CPF</label><input type="text" id="company-cnpj" name="companyCnpj" placeholder="00.000.000/0001-00"></div>
+                        <div class="form-group"><label for="company-phone">Telefone / WhatsApp</label><input type="tel" id="company-phone" name="companyPhone" placeholder="(00) 00000-0000"></div>
+                        <div class="form-group"><label for="company-email">E-mail</label><input type="email" id="company-email" name="companyEmail" placeholder="contato@empresa.com.br"></div>
+                        <div class="form-group"><label for="company-website">Site</label><input type="url" id="company-website" name="companyWebsite" placeholder="www.empresa.com.br"></div>
+                        <div class="form-group full-width"><label for="company-city">Cidade / UF</label><input type="text" id="company-city" name="companyCity" placeholder="Ex: Blumenau / SC"></div>
+                    </div>
+                </section>
+
+                <!-- ETAPA 2: SEU CLIENTE -->
+                <section id="step-2" class="step-section hidden screen-only">
+                    <header class="step-header">
+                        <h2>Seu Cliente</h2>
+                        <p>Informe os dados de quem receberá esta proposta.</p>
+                    </header>
+
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="client-name">Empresa / Nome do Cliente <span class="required">*</span></label>
+                            <input type="text" id="client-name" name="clientName" required placeholder="Ex: Cliente S.A.">
+                            <span class="error-msg hidden">Este campo é obrigatório.</span>
+                        </div>
+                        <div class="form-group full-width"><label for="client-contact">Responsável</label><input type="text" id="client-contact" name="clientContact" placeholder="Nome do contato (Ex: João Silva)"></div>
+                        <div class="form-group"><label for="client-email">E-mail</label><input type="email" id="client-email" name="clientEmail" placeholder="joao@cliente.com"></div>
+                        <div class="form-group"><label for="client-phone">Telefone / WhatsApp</label><input type="tel" id="client-phone" name="clientPhone" placeholder="(00) 00000-0000"></div>
+                        <div class="form-group full-width"><label for="client-city">Cidade / UF</label><input type="text" id="client-city" name="clientCity" placeholder="Ex: São Paulo / SP"></div>
+                    </div>
+                </section>
+
+                <!-- ETAPA 3: PROPOSTA & IDENTIDADE -->
+                <section id="step-3" class="step-section hidden screen-only">
+                    <header class="step-header">
+                        <h2>Informações e Identidade</h2>
+                        <p>Defina as cores e o conteúdo introdutório da proposta.</p>
+                    </header>
+
+                    <div class="theme-selection-box">
+                        <h3>Cores do Documento</h3>
+                        <p class="help-text">Personalize a identidade da proposta impressa.</p>
+                        
+                        <div class="theme-options">
+                            <label class="radio-label"><input type="radio" name="docTheme" value="default" checked> Padrão Aurantius</label>
+                            <label class="radio-label"><input type="radio" name="docTheme" value="custom"> Personalizar Cores</label>
+                            <label class="radio-label hidden" id="theme-logo-option"><input type="radio" name="docTheme" value="logo"> Usar cores da logo</label>
+                        </div>
+
+                        <div id="custom-color-pickers" class="color-pickers hidden">
+                            <div class="color-picker-group">
+                                <label for="color-primary">Cor Principal</label>
+                                <input type="color" id="color-primary" value="#0B1F3A">
+                            </div>
+                            <div class="color-picker-group">
+                                <label for="color-contrast">Fundo de Blocos</label>
+                                <input type="color" id="color-contrast" value="#F9FAFB">
+                            </div>
+                            <div class="color-picker-group">
+                                <label for="color-accent">Cor de Destaque</label>
+                                <input type="color" id="color-accent" value="#C9A227">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-top: 30px;">
+                        <div class="form-group full-width">
+                            <label for="proposal-title">Título da Proposta <span class="required">*</span></label>
+                            <input type="text" id="proposal-title" name="proposalTitle" required value="PROPOSTA COMERCIAL" placeholder="Ex: PROPOSTA COMERCIAL">
+                            <span class="error-msg hidden">Este campo é obrigatório.</span>
+                        </div>
+                        <div class="form-group"><label for="proposal-number">Número da Proposta</label><input type="text" id="proposal-number" name="proposalNumber" placeholder="Ex: 2026-001"></div>
+                        <div class="form-group"><label for="proposal-date">Data de Emissão</label><input type="date" id="proposal-date" name="proposalDate"></div>
+                        <div class="form-group full-width"><label for="proposal-intro">Apresentação</label><textarea id="proposal-intro" rows="3" placeholder="Breve texto de introdução sobre a sua empresa..."></textarea></div>
+                        <div class="form-group full-width"><label for="proposal-objective">Objetivo</label><textarea id="proposal-objective" rows="3" placeholder="Qual o principal objetivo desta contratação?"></textarea></div>
+                    </div>
+                </section>
+
+                <!-- ETAPA 4: SERVIÇOS / ESCOPO -->
+                <section id="step-4" class="step-section hidden screen-only">
+                    <header class="step-header">
+                        <h2>Escopo / Serviços</h2>
+                        <p>Adicione os itens, serviços ou produtos que compõem esta proposta.</p>
+                    </header>
+
+                    <div class="services-container">
+                        <div class="table-responsive">
+                            <table class="services-table" id="ui-services-table">
+                                <thead>
+                                    <tr>
+                                        <th class="col-item">Item / Descrição</th>
+                                        <th class="col-qty">Qtd.</th>
+                                        <th class="col-price">Valor Unit.</th>
+                                        <th class="col-total">Total</th>
+                                        <th class="col-actions">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ui-services-list"></tbody>
+                            </table>
+                        </div>
+                        <div id="services-error" class="error-msg hidden">Você precisa adicionar pelo menos um item.</div>
+                        <button type="button" id="btn-add-item" class="btn btn-outline"><span class="icon">+</span> Adicionar item</button>
+                    </div>
+
+                    <div id="item-form-container" class="item-form-box hidden">
+                        <h3>Detalhes do Item</h3>
+                        <div class="form-grid">
+                            <div class="form-group full-width"><label for="item-name">Nome do Serviço/Produto <span class="required">*</span></label><input type="text" id="item-name"></div>
+                            <div class="form-group full-width"><label for="item-desc">Descrição</label><textarea id="item-desc" rows="2"></textarea></div>
+                            <div class="form-group"><label for="item-qty">Quantidade</label><input type="number" id="item-qty" min="1" value="1"></div>
+                            <div class="form-group"><label for="item-price">Valor Unitário (R$) <span class="required">*</span></label><input type="number" id="item-price" min="0" step="0.01"></div>
+                        </div>
+                        <div class="item-form-actions">
+                            <button type="button" id="btn-cancel-item" class="btn btn-text">Cancelar</button>
+                            <button type="button" id="btn-save-item" class="btn btn-primary">Salvar Item</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ETAPA 5: INVESTIMENTO -->
+                <section id="step-5" class="step-section hidden screen-only">
+                    <header class="step-header">
+                        <h2>Investimento</h2>
+                        <p>Resumo dos valores calculados e aplicação de descontos.</p>
+                    </header>
+
+                    <div class="investment-box">
+                        <div class="investment-row">
+                            <span class="investment-label">Subtotal dos serviços:</span>
+                            <span class="investment-value" id="ui-subtotal">R$ 0,00</span>
+                        </div>
+                        <div class="discount-config">
+                            <div class="form-group">
+                                <label for="discount-type">Desconto</label>
+                                <select id="discount-type" name="discountType">
+                                    <option value="none">Sem desconto</option>
+                                    <option value="fixed">Valor Fixo (R$)</option>
+                                    <option value="percentage">Percentual (%)</option>
+                                </select>
+                            </div>
+                            <div class="form-group"><label for="discount-value">Valor</label><input type="number" id="discount-value" min="0" step="0.01" disabled></div>
+                        </div>
+                        <div class="investment-row total-row">
+                            <span class="investment-label">Investimento Total:</span>
+                            <span class="investment-value" id="ui-total">R$ 0,00</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ETAPA 6: CONDIÇÕES -->
+                <section id="step-6" class="step-section hidden screen-only">
+                    <header class="step-header">
+                        <h2>Condições e Finalização</h2>
+                        <p>Defina as regras, prazos e os próximos passos para fechamento.</p>
+                    </header>
+
+                    <div class="form-grid">
+                        <div class="form-group full-width"><label for="proposal-validity">Validade da Proposta</label><input type="text" id="proposal-validity" value="15 dias"></div>
+                        <div class="form-group full-width"><label for="proposal-deadline">Prazo de Execução</label><input type="text" id="proposal-deadline" placeholder="Ex: 15 dias úteis após a aprovação"></div>
+                        
+                        <div class="form-group full-width">
+                            <label for="proposal-payment">Condições de Pagamento</label>
+                            <p class="help-text">Escolha uma sugestão para preencher automaticamente ou escreva sua própria condição.</p>
+                            
+                            <!-- Sugestões de Pagamento -->
+                            <div class="payment-suggestions">
+                                <button type="button" class="payment-btn" data-val="50% na aprovação e 50% na entrega">50% aprovação<br>50% entrega</button>
+                                <button type="button" class="payment-btn" data-val="50% na aprovação e 50% em 15 dias">50% aprovação<br>50% em 15 dias</button>
+                                <button type="button" class="payment-btn" data-val="40% na aprovação e 60% na entrega">40% aprovação<br>60% entrega</button>
+                                <button type="button" class="payment-btn" data-val="30% na aprovação e 70% na entrega">30% aprovação<br>70% entrega</button>
+                                <button type="button" class="payment-btn" data-val="100% na entrega">100% na entrega</button>
+                                <button type="button" class="payment-btn active" data-val="custom">Personalizada</button>
+                            </div>
+                            
+                            <textarea id="proposal-payment" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width"><label for="proposal-notes">Observações</label><textarea id="proposal-notes" rows="2"></textarea></div>
+                        <div class="form-group full-width"><label for="proposal-nextsteps">Próximos Passos</label><textarea id="proposal-nextsteps" rows="3"></textarea></div>
+                        <div class="form-group full-width checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox" id="proposal-acceptance"> Incluir bloco de Aceite e Assinatura</label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CONTROLES DE NAVEGAÇÃO DO FORMULÁRIO -->
+                <div class="form-actions screen-only" id="form-navigation">
+                    <button type="button" id="btn-prev" class="btn btn-secondary hidden">Voltar</button>
+                    <button type="button" id="btn-next" class="btn btn-primary">Avançar</button>
+                    <button type="button" id="btn-finish" class="btn btn-primary hidden">Revisar Proposta</button>
+                </div>
+
+                <!-- ETAPA 7: REVISAR E DOCUMENTO A4 -->
+                <section id="step-7" class="step-section hidden print-visible" style="padding:0; background:transparent; border:none; box-shadow:none;">
+                    
+                    <div class="review-toolbar screen-only">
+                        <div class="toolbar-info">
+                            <h2>Visualização do Documento</h2>
+                            <p>Confira como a proposta será gerada e impressa.</p>
+                        </div>
+                        <div class="toolbar-actions">
+                            <button type="button" id="btn-edit-proposal" class="btn btn-secondary">Editar Proposta</button>
+                            <button type="button" id="btn-print-pdf" class="btn btn-primary">Imprimir / Salvar PDF</button>
+                        </div>
+                    </div>
+
+                    <!-- CONTAINER DO DOCUMENTO A4 (Estrutura de Tabela para Impressão Perfeita) -->
+                    <div class="a4-document-wrapper">
+                        <div id="a4-document" class="a4-document">
+                            
+                            <!-- TABELA MASTER PARA REPETIÇÃO DE CABEÇALHO E RODAPÉ -->
+                            <table class="doc-master-table">
+                                <!-- CABEÇALHO REPETÍVEL -->
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            <header class="doc-header-compact">
+                                                <div class="doc-header-brand">
+                                                    <div class="doc-logo-area" id="render-logo-area"></div>
+                                                    <div class="doc-company-name" id="render-company-name"></div>
+                                                </div>
+                                                <div class="doc-header-meta" id="render-header-meta"></div>
+                                            </header>
+                                        </td>
+                                    </tr>
+                                </thead>
+
+                                <!-- CORPO DO DOCUMENTO -->
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="doc-body-content">
+                                                <!-- CLIENTE E TÍTULO -->
+                                                <section class="doc-title-section">
+                                                    <div class="doc-client-data" id="render-client-data">
+                                                        <h3>Preparado para:</h3>
+                                                        <h2 id="render-client-name"></h2>
+                                                        <p id="render-client-contact"></p>
+                                                    </div>
+                                                    <div class="doc-proposal-title-area">
+                                                        <h1 id="render-proposal-title"></h1>
+                                                        <p class="doc-proposal-metadata" id="render-proposal-metadata"></p>
+                                                    </div>
+                                                </section>
+
+                                                <!-- APRESENTAÇÃO E OBJETIVO -->
+                                                <section class="doc-text-section" id="render-intro-section">
+                                                    <div class="doc-block" id="block-intro">
+                                                        <h3>Apresentação</h3>
+                                                        <div class="doc-content" id="render-intro-text"></div>
+                                                    </div>
+                                                    <div class="doc-block" id="block-objective">
+                                                        <h3>Objetivo</h3>
+                                                        <div class="doc-content" id="render-objective-text"></div>
+                                                    </div>
+                                                </section>
+
+                                                <!-- ESCOPO -->
+                                                <section class="doc-scope-section" id="render-scope-section">
+                                                    <h3>Escopo de Serviços</h3>
+                                                    <table class="doc-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="col-item">Item / Descrição</th>
+                                                                <th class="col-qty">Qtd.</th>
+                                                                <th class="col-price">Valor Unit.</th>
+                                                                <th class="col-total">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="render-services-list"></tbody>
+                                                    </table>
+                                                </section>
+
+                                                <!-- INVESTIMENTO -->
+                                                <section class="doc-investment-section" id="render-investment-section">
+                                                    <h3>Investimento</h3>
+                                                    <div class="doc-investment-summary">
+                                                        <div class="summary-line" id="render-subtotal-line">
+                                                            <span>Subtotal</span>
+                                                            <span id="render-subtotal-val"></span>
+                                                        </div>
+                                                        <div class="summary-line" id="render-discount-line">
+                                                            <span>Desconto</span>
+                                                            <span id="render-discount-val"></span>
+                                                        </div>
+                                                        <div class="summary-line total-line">
+                                                            <span>Investimento Total</span>
+                                                            <span id="render-total-val"></span>
+                                                        </div>
+                                                    </div>
+                                                </section>
+
+                                                <!-- CONDIÇÕES COMERCIAIS -->
+                                                <section class="doc-conditions-section" id="render-conditions-section">
+                                                    <div class="doc-block" id="block-deadline">
+                                                        <h3>Prazo de Execução</h3>
+                                                        <div class="doc-content" id="render-deadline-text"></div>
+                                                    </div>
+                                                    <div class="doc-block" id="block-payment">
+                                                        <h3>Condições de Pagamento</h3>
+                                                        <div class="doc-content" id="render-payment-text"></div>
+                                                    </div>
+                                                    <div class="doc-block" id="block-notes">
+                                                        <h3>Observações</h3>
+                                                        <div class="doc-content" id="render-notes-text"></div>
+                                                    </div>
+                                                    <div class="doc-block" id="block-nextsteps">
+                                                        <h3>Próximos Passos</h3>
+                                                        <div class="doc-content" id="render-nextsteps-text"></div>
+                                                    </div>
+                                                </section>
+
+                                                <!-- ACEITE -->
+                                                <section class="doc-acceptance-section" id="render-acceptance-section">
+                                                    <h3>Aceite da Proposta</h3>
+                                                    <p>Declaro estar de acordo com os termos apresentados nesta proposta comercial.</p>
+                                                    <div class="signature-box">
+                                                        <div class="signature-line">
+                                                            <div class="line"></div>
+                                                            <span>Assinatura do Responsável</span>
+                                                        </div>
+                                                        <div class="signature-details">
+                                                            <p>Nome: _____________________________________</p>
+                                                            <p>CPF/CNPJ: _________________________________</p>
+                                                            <p>Data: _____ / _____ / _________</p>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                                <!-- RODAPÉ REPETÍVEL -->
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <footer class="doc-footer-compact">
+                                                <p id="render-footer-contact"></p>
+                                            </footer>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </section>
+
+            </form>
+        </div>
+    </main>
+    <canvas id="offscreen-canvas" style="display:none;"></canvas>
+    <script src="script.js" defer></script>
+</body>
+</html>
