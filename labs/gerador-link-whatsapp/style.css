@@ -1,0 +1,340 @@
+/**
+ * AURANTIUS LABS
+ * Ferramenta: Gerador de Link do WhatsApp
+ * Estilos locais e de componentes
+ */
+
+/* ==========================================================================
+   Layout Base & Container
+   ========================================================================== */
+
+.app-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: #F8FAFC;
+}
+
+.app-card {
+    background-color: #FFFFFF;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(11, 31, 58, 0.06), 0 2px 6px rgba(11, 31, 58, 0.04);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(11, 31, 58, 0.05);
+}
+
+/* ==========================================================================
+   Cabeçalho (Header)
+   ========================================================================== */
+
+.app-header {
+    padding: 2.5rem 2rem 1.5rem;
+    text-align: center;
+}
+
+/* 
+   Ajuste para link: text-decoration none previne sublinhado e garante
+   que a cor original da tipografia se mantenha, sem parecer um hyperlink comum.
+*/
+.labs-signature {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0B1F3A;
+    margin-bottom: 0.75rem;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.labs-signature:hover {
+    opacity: 0.7; /* Microinteração extremamente discreta */
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0B1F3A;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 0.9375rem;
+    color: #64748B;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   Corpo & Formulário (Body)
+   ========================================================================== */
+
+.app-body {
+    padding: 0 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.input-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #334155;
+}
+
+.label-optional {
+    color: #94A3B8;
+    font-weight: 400;
+    font-size: 0.8125rem;
+}
+
+/* Campos de Entrada Padrão */
+.input-phone,
+.input-message,
+.input-ddi {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #0B1F3A;
+    transition: all 0.2s ease;
+}
+
+.input-phone::placeholder,
+.input-message::placeholder {
+    color: #94A3B8;
+}
+
+.input-phone:focus,
+.input-message:focus,
+.input-ddi:focus {
+    outline: none;
+    border-color: #0B1F3A;
+    box-shadow: 0 0 0 3px rgba(11, 31, 58, 0.1);
+}
+
+/* Wrapper do Telefone (DDI + Número) */
+.phone-input-wrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.input-ddi {
+    width: 80px;
+    text-align: center;
+    background-color: #F8FAFC;
+    color: #475569;
+    font-weight: 500;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.input-message {
+    resize: none;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   Rodapé & Área de Resultado (Footer)
+   ========================================================================== */
+
+.app-footer {
+    padding: 0 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.output-container {
+    background-color: #F8FAFC;
+    border: 1px dashed #CBD5E1;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.output-link {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: #0B1F3A;
+    word-break: break-all;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.output-link.placeholder-state {
+    color: #94A3B8;
+    font-style: italic;
+    font-family: inherit;
+}
+
+/* ==========================================================================
+   Botões e Ações
+   ========================================================================== */
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Botão Primário */
+.btn-primary {
+    background-color: #C9A227;
+    color: #FFFFFF;
+}
+
+.btn-primary:not(:disabled):hover {
+    background-color: #B59123;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 162, 39, 0.2);
+}
+
+/* Estado de Sucesso (Maior especificidade) */
+#btn-copy.is-success,
+#btn-copy.is-success:hover,
+#btn-copy.is-success:focus,
+#btn-copy.is-success:active {
+    background: #2E7D32; 
+    border-color: #2E7D32;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+    transform: translateY(0);
+}
+
+/* Botão Secundário */
+.btn-secondary {
+    background-color: transparent;
+    color: #0B1F3A;
+    border: 1px solid #E2E8F0;
+}
+
+.btn-secondary:not(:disabled):hover {
+    background-color: #F8FAFC;
+    border-color: #CBD5E1;
+}
+
+/* Botão Terciário (Limpar) */
+.btn-tertiary {
+    background-color: transparent;
+    color: #94A3B8;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.btn-tertiary:not(:disabled):hover {
+    color: #EF4444;
+    background-color: #FEF2F2;
+}
+
+/* Estado Desabilitado */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ==========================================================================
+   Classes Utilitárias (Acessibilidade)
+   ========================================================================== */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+    .app-card {
+        max-width: 560px;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-wrapper {
+        padding: 0;
+        align-items: flex-start;
+        background-color: #FFFFFF;
+    }
+
+    .app-card {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        max-width: 100%;
+    }
+
+    .app-header {
+        padding: 2rem 1.5rem 1.5rem;
+    }
+
+    .app-body,
+    .app-footer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .input-phone,
+    .input-message,
+    .input-ddi,
+    .btn {
+        min-height: 48px; 
+    }
+}

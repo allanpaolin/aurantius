@@ -238,14 +238,12 @@ a {
 ========================================= */
 .hero {
     position: relative;
-    /* Ajuste estrutural: Usa svh para mobile, com fallback vh */
     min-height: 100vh;
     min-height: 100svh;
     display: flex;
     align-items: center;
     overflow: hidden;
     background-color: #040A12;
-    /* Safe Zones: Garante que o conteúdo nunca colida com a navbar (top) e o indicador de scroll (bottom) */
     padding-top: 160px;
     padding-bottom: 120px;
 }
@@ -257,7 +255,7 @@ a {
 }
 
 .hero-bg-layer {
-    background-image: url('assets/images/hero-background.jpg');
+    background-image: url('../images/hero-background.jpg');
     background-position: center;
     background-size: cover;
     z-index: 1;
@@ -312,7 +310,6 @@ a {
     position: relative;
     z-index: 5;
     max-width: 860px;
-    /* Removido o translateY(-20px) absoluto. O alinhamento agora flui com os paddings estruturais */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -470,6 +467,67 @@ a {
 
 .card-small:hover i {
     color: var(--accent);
+}
+
+/* =========================================
+   AURANTIUS LABS (Preview)
+========================================= */
+#aurantius-labs-preview {
+    padding: 100px 0 60px; /* Mais compacto para atuar como transição fluida */
+}
+
+.labs-preview-wrapper {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.labs-badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 24px;
+}
+
+.labs-badge-tag::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent);
+    border-radius: 50%;
+}
+
+.labs-preview-wrapper h2 {
+    margin-bottom: 24px;
+}
+
+.labs-preview-wrapper p {
+    margin-bottom: 40px;
+    font-size: 1.125rem;
+    color: var(--text-muted);
+}
+
+.btn-outline-dark {
+    border-color: var(--border);
+    color: var(--primary);
+    background-color: transparent;
+}
+
+.btn-outline-dark:hover {
+    border-color: rgba(11, 31, 58, 0.15);
+    background-color: #F8FAFC;
+    color: var(--primary);
+    box-shadow: 0 4px 12px rgba(11, 31, 58, 0.03);
+    transform: translateY(-2px);
 }
 
 /* =========================================
@@ -657,7 +715,6 @@ a {
     h2 { font-size: 2rem; }
     .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 32px; }
     
-    /* Hero no Mobile com as Safe Zones preservadas */
     .hero {
         padding-top: 140px;
         padding-bottom: 100px;
@@ -666,6 +723,8 @@ a {
     .navbar { width: calc(100% - 32px); padding: 12px 24px; }
     .back-to-top { bottom: 24px; right: 24px; }
     .footer-container { flex-direction: column; gap: 32px; text-align: center; }
+
+    #aurantius-labs-preview { padding: 60px 0; }
     
     .cta-section { padding: 64px 0 80px; }
     .cta-card {

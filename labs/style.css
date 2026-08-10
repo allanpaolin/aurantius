@@ -1,0 +1,313 @@
+/**
+ * AURANTIUS LABS
+ * Diretório de Ferramentas e Ecossistema
+ * 
+ * Filosofia Visual: Minimalismo, organização, arquitetura escalável e 
+ * foco absoluto no produto (Show, don't tell).
+ */
+
+/* ==========================================================================
+   LAYOUT BASE
+   ========================================================================== */
+
+.labs-directory {
+    background-color: #F8FAFC; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.labs-main {
+    flex: 1; 
+    padding-bottom: 120px;
+}
+
+/* ==========================================================================
+   CABEÇALHO DO LABS
+   ========================================================================== */
+
+.labs-header {
+    padding: 100px 0 80px; 
+}
+
+.labs-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent); 
+    margin-bottom: 16px;
+}
+
+.labs-title {
+    font-size: 3.25rem;
+    font-weight: 600;
+    color: var(--primary); 
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    line-height: 1.1;
+}
+
+.labs-description {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    max-width: 780px; 
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ==========================================================================
+   GRID DE FERRAMENTAS
+   ========================================================================== */
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    column-gap: 32px;
+    row-gap: 48px;
+}
+
+/* ==========================================================================
+   CARDS DE PRODUTO
+   ========================================================================== */
+
+.tool-card {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 40px; 
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 100%;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.tool-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tool-category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94A3B8; 
+}
+
+/* Badges de Status (Padrão Software) */
+.tool-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px; 
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: var(--radius-capsule);
+}
+
+.tool-status::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.tool-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1; 
+}
+
+.tool-name {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.tool-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.tool-footer {
+    margin-top: 8px;
+}
+
+/* ==========================================================================
+   ESTADOS DOS CARDS
+   ========================================================================== */
+
+/* ESTADO 1: Disponível */
+.tool-card.is-available {
+    box-shadow: 0 4px 24px rgba(11, 31, 58, 0.03); 
+}
+
+.tool-card.is-available:hover {
+    transform: translateY(-2px); 
+    box-shadow: 0 12px 32px rgba(11, 31, 58, 0.06); 
+    border-color: rgba(11, 31, 58, 0.08);
+}
+
+.status-available {
+    background-color: rgba(11, 31, 58, 0.04);
+    color: var(--primary);
+    border: 1px solid rgba(11, 31, 58, 0.08);
+}
+
+.status-available::before {
+    background-color: #10B981;
+}
+
+/* Botão Específico do Labs */
+.tool-action {
+    width: 100%;
+    background-color: var(--white);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.tool-action:hover {
+    background-color: var(--accent); 
+    border-color: var(--accent);
+    color: var(--primary); 
+}
+
+/* ESTADO 2: Em Laboratório */
+.tool-card.is-developing {
+    background-color: #FAFAFA; 
+    border-color: #E2E8F0;
+    box-shadow: none;
+}
+
+.tool-card.is-developing:hover {
+    border-color: #CBD5E1; 
+}
+
+.status-lab {
+    background-color: transparent;
+    color: #64748B;
+    border: 1px dashed #CBD5E1; 
+}
+
+.status-lab::before {
+    background-color: var(--accent);
+}
+
+.tool-future-note {
+    font-size: 0.875rem;
+    color: #94A3B8;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   RODAPÉ DO LABS E ASSINATURA
+   ========================================================================== */
+
+.labs-footer {
+    padding: 48px 0;
+    background-color: var(--white);
+    border-top: 1px solid var(--border);
+}
+
+.labs-footer .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.footer-note {
+    font-size: 0.875rem;
+    color: #94A3B8;
+    margin: 0;
+}
+
+/* Ajuste de legibilidade e peso para a assinatura */
+.footer-signature {
+    font-size: 0.8125rem; /* ~13px */
+    color: #64748B; /* Cinza médio, muito mais legível que o anterior */
+    font-weight: 400;
+}
+
+.signature-link {
+    color: var(--primary); /* Azul Institucional #0B1F3A */
+    text-decoration: none;
+    font-weight: 500; /* Leve destaque de peso na marca */
+    transition: opacity var(--transition-fast);
+}
+
+.signature-link:hover {
+    opacity: 0.75; /* Hover extremamente sutil */
+}
+
+.suggest-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-capsule);
+    transition: all var(--transition-fast);
+}
+
+.suggest-link:hover {
+    color: var(--primary);
+    background-color: #F8FAFC;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .labs-title {
+        font-size: 2.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .labs-header {
+        padding: 80px 0 64px;
+    }
+
+    .labs-title {
+        font-size: 2.25rem;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+        column-gap: 24px;
+        row-gap: 32px; 
+    }
+
+    .tool-card {
+        padding: 32px; 
+    }
+
+    .labs-footer .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-info {
+        align-items: center;
+    }
+}

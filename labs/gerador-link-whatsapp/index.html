@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Gerador de Link do WhatsApp | Aurantius Labs</title>
+    <meta name="description" content="Gere um link oficial do WhatsApp com mensagem personalizada de forma rápida, gratuita e sem atritos.">
+    
+    <!-- Favicons oficiais da AURANTIUS (Caminho relativo para a pasta assets na raiz) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/site.webmanifest">
+    
+    <!-- Tipografia: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS: Importação Global e Local -->
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="labs-environment">
+
+    <!-- Wrapper principal para garantir o layout single-screen (100vh) -->
+    <main class="app-wrapper">
+        
+        <!-- O container principal atua como o 'aplicativo' em si -->
+        <article class="app-card" aria-labelledby="app-title">
+            
+            <header class="app-header">
+                <!-- Assinatura transformada em link para o hub do Labs -->
+                <a href="../index.html" class="labs-signature" aria-label="Voltar para o ecossistema Aurantius Labs">Aurantius Labs</a>
+                <h1 id="app-title" class="title">Gerador de Link do WhatsApp</h1>
+                <p class="subtitle">Gere um link oficial do WhatsApp com mensagem personalizada.</p>
+            </header>
+
+            <form id="whatsapp-form" class="app-body" novalidate aria-label="Formulário de configuração do link">
+                
+                <!-- Agrupamento semântico do DDI + Telefone -->
+                <fieldset class="input-group">
+                    <legend class="sr-only">Número de telefone com código do país</legend>
+                    <label for="phone-number" class="input-label">Número do WhatsApp</label>
+                    
+                    <div class="phone-input-wrapper">
+                        <label for="country-code" class="sr-only">Código do país</label>
+                        <!-- DDI padronizado para Brasil (+55) -->
+                        <input type="text" id="country-code" name="country-code" class="input-ddi" value="+55" aria-label="Código do país">
+                        
+                        <input type="tel" id="phone-number" name="phone-number" class="input-phone" placeholder="(47) 99999-9999" required aria-required="true">
+                    </div>
+                </fieldset>
+
+                <!-- Campo de Mensagem -->
+                <div class="input-group">
+                    <label for="custom-message" class="input-label">Mensagem <span class="label-optional">(opcional)</span></label>
+                    <textarea id="custom-message" name="custom-message" class="input-message" placeholder="Olá! Gostaria de saber mais sobre as soluções..." rows="3"></textarea>
+                </div>
+
+            </form>
+
+            <footer class="app-footer">
+                
+                <!-- Área de output (Reativa para Leitores de Tela) -->
+                <div class="output-container" aria-live="polite" aria-atomic="true">
+                    <span class="sr-only">Resultado do link gerado:</span>
+                    <p id="generated-link" class="output-link placeholder-state">O link gerado aparecerá aqui...</p>
+                </div>
+
+                <!-- Ações principais -->
+                <div class="action-buttons">
+                    <button type="button" id="btn-copy" class="btn btn-primary" disabled aria-disabled="true">
+                        <i data-lucide="copy" class="btn-icon" aria-hidden="true"></i>
+                        <span>Copiar Link</span>
+                    </button>
+                    
+                    <button type="button" id="btn-open" class="btn btn-secondary" disabled aria-disabled="true">
+                        <i data-lucide="external-link" class="btn-icon" aria-hidden="true"></i>
+                        <span>Abrir no WhatsApp</span>
+                    </button>
+                    
+                    <button type="button" id="btn-clear" class="btn btn-tertiary" aria-label="Restaurar estado inicial">
+                        <i data-lucide="rotate-ccw" class="btn-icon" aria-hidden="true"></i>
+                        <span>Limpar</span>
+                    </button>
+                </div>
+                
+            </footer>
+            
+        </article>
+        
+    </main>
+
+    <!-- Scripts: Ícones, Global e Local -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>lucide.createIcons();</script>
+    <script src="../../assets/js/global.js" defer></script>
+    <script src="script.js" defer></script>
+
+</body>
+</html>
