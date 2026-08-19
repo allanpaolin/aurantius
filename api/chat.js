@@ -2,7 +2,7 @@ const MAX_MESSAGE_LENGTH = 2000;
 const MAX_HISTORY_ITEMS = 20;
 const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 12;
-const MODEL = "gemini-3.6-flash";
+const MODEL = "gemini-3.5-flash-lite";
 
 const rateLimitStore = globalThis.__aurantiusChatRateLimit || new Map();
 globalThis.__aurantiusChatRateLimit = rateLimitStore;
@@ -88,7 +88,19 @@ export default async function handler(req, res) {
       data = await response.json();
     } catch (error) {
       console.error("Resposta inválida do Gemini:", error.message);
+      if (response.status === 429) {
+        return res.status(429).json({
+          error: "O assistente está temporariamente indisponível. Tente novamente em instantes.",
+        });
+      }
       return res.status(502).json({ error: "Não foi possível consultar o assistente agora" });
+    }
+
+    if (response.status === 429) {
+      console.error("Quota Gemini excedida:", data);
+      return res.status(429).json({
+        error: "O assistente está temporariamente indisponível. Tente novamente em instantes.",
+      });
     }
 
     if (!response.ok) {
