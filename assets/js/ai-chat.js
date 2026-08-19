@@ -169,6 +169,7 @@ const AurantiusAIChat = {
     createWhatsAppLink(history) {
         const latestNeed = history
             .filter(item => item.role === 'user')
+            .map(item => item.content)
             .pop() || '';
         const safeNeed = latestNeed
             .replace(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, '[dado removido]')
@@ -202,7 +203,7 @@ const AurantiusAIChat = {
             const loading = document.createElement('div');
             loading.className = 'ai-chat-message is-agent is-loading';
             loading.dataset.loadingMessage = 'true';
-            loading.textContent = 'Pensando...';
+            loading.textContent = 'Digitando...';
             this.elements.messages.appendChild(loading);
             this.elements.messages.scrollTop = this.elements.messages.scrollHeight;
         } else if (!isLoading && existing) {
