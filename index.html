@@ -34,6 +34,7 @@
     
     <!-- CSS (Caminho atualizado) -->
     <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/ai-chat.css">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -216,7 +217,54 @@
         <i data-lucide="arrow-up"></i>
     </button>
 
+    <!-- Agente comercial -->
+    <div class="ai-chat" data-ai-chat>
+        <div class="ai-chat-invite" data-chat-invite hidden>
+            <button class="ai-chat-invite-close" type="button" data-chat-dismiss aria-label="Dispensar convite">
+                <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+            <p>Posso te ajudar?<br>Se você estiver procurando alguma solução para sua empresa, posso entender o que precisa.</p>
+            <button class="ai-chat-invite-action" type="button" data-chat-invite-open>Conversar agora</button>
+        </div>
+
+        <section class="ai-chat-panel" data-chat-panel role="dialog" aria-modal="false" aria-labelledby="ai-chat-title" hidden>
+            <header class="ai-chat-header">
+                <div>
+                    <span class="ai-chat-eyebrow">AURANTIUS</span>
+                    <h2 id="ai-chat-title">Assistente comercial</h2>
+                    <span class="ai-chat-status"><span aria-hidden="true"></span> Online</span>
+                </div>
+                <button class="ai-chat-icon-button" type="button" data-chat-close aria-label="Fechar conversa">
+                    <i data-lucide="x" aria-hidden="true"></i>
+                </button>
+            </header>
+
+            <div class="ai-chat-messages" data-chat-messages aria-live="polite" aria-atomic="false"></div>
+
+            <div class="ai-chat-suggestions" data-chat-suggestions>
+                <button type="button" data-chat-suggestion="Tenho um projeto em mente">Tenho um projeto em mente</button>
+                <button type="button" data-chat-suggestion="Quero conhecer a Aurantius">Quero conhecer a Aurantius</button>
+            </div>
+
+            <div class="ai-chat-feedback" data-chat-feedback role="status" aria-live="polite"></div>
+
+            <form class="ai-chat-form" data-chat-form>
+                <label class="sr-only" for="ai-chat-input">Digite sua mensagem</label>
+                <textarea id="ai-chat-input" data-chat-input rows="1" maxlength="2000" placeholder="Escreva uma mensagem..." autocomplete="off"></textarea>
+                <button class="ai-chat-send" type="submit" data-chat-send aria-label="Enviar mensagem">
+                    <i data-lucide="arrow-up" aria-hidden="true"></i>
+                </button>
+            </form>
+        </section>
+
+        <button class="ai-chat-launcher" type="button" data-chat-open aria-label="Abrir assistente comercial" aria-expanded="false">
+            <i data-lucide="message-circle" aria-hidden="true"></i>
+            <span>Conversar</span>
+        </button>
+    </div>
+
     <!-- JS (Caminho atualizado) -->
     <script src="assets/js/global.js"></script>
+    <script src="assets/js/ai-chat.js"></script>
 </body>
 </html>
