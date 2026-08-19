@@ -122,7 +122,7 @@ export default async function handler(req, res) {
     }).trim();
 
     const allowedActions = [...new Set(actions)].filter((action) => ["whatsapp", "labs"].includes(action));
-    const hasCommercialSignal = hasCommercialIntent(history);
+    const hasCommercialSignal = hasCommercialIntent(history) || hasAcceptedContactOffer(history);
     const safeActions = hasCommercialSignal
       ? ["whatsapp"]
       : allowedActions.filter((action) => action !== "whatsapp");

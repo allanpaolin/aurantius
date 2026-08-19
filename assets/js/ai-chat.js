@@ -29,7 +29,7 @@ const AurantiusAIChat = {
             form: root?.querySelector('[data-chat-form]'),
             input: root?.querySelector('[data-chat-input]'),
             send: root?.querySelector('[data-chat-send]')
-                this.sendMessage(this.elements.input.value, document.activeElement === this.elements.input);
+        };
     },
 
     bindEvents() {
