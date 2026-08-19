@@ -178,9 +178,13 @@ const AurantiusAIChat = {
             this.addFeedback(errorMessage, shouldOfferContact, requestHistory);
         } finally {
             this.setLoading(false);
-            if (shouldRestoreFocus && !this.elements.panel.hidden &&
-                [document.body, this.elements.input, this.elements.send].includes(document.activeElement)) {
-                this.elements.input.focus();
+            if (shouldRestoreFocus) {
+                window.setTimeout(() => {
+                    if (!this.elements.panel.hidden &&
+                        [document.body, this.elements.input, this.elements.send].includes(document.activeElement)) {
+                        this.elements.input.focus();
+                    }
+                }, 0);
             }
         }
     },
@@ -212,20 +216,7 @@ const AurantiusAIChat = {
     },
 
     createWhatsAppLink(history) {
-        const latestNeed = history
-            .filter(item => item.role === 'user')
-            .map(item => item.content)
-            .pop() || '';
-        const safeNeed = latestNeed
-            .replace(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, '[dado removido]')
-            .replace(/\b(?:\+?\d[\d\s().-]{8,}\d)\b/g, '[dado removido]')
-            .replace(/\b(?:cpf|cnpj)\s*[:.-]?\s*[\d./-]+/gi, '[dado removido]')
-            .replace(/\b(?:senha|password|token|chave de api|credencial)[^,.!?;]*/gi, '[dado removido]')
-            .replace(/\s+/g, ' ')
-            .trim()
-            .slice(0, 220);
-        const context = safeNeed || 'uma possível solução para minha empresa';
-        const text = `Olá! Vim pelo site da AURANTIUS e conversei com o assistente sobre ${context}.`;
+        const text = 'Olá! Vim pelo site da AURANTIUS e gostaria de conversar com alguém da equipe.';
         return `https://wa.me/${this.WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
     },
 
