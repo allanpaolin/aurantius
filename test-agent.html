@@ -26,7 +26,7 @@
     const responseElement = document.getElementById("response");
 
     button.addEventListener("click", async () => {
-      responseElement.textContent = "Pensando...";
+      responseElement.textContent = "Digitando...";
 
       try {
         const response = await fetch("/api/chat", {
@@ -39,11 +39,18 @@
           })
         });
 
-        const data = await response.json();
+        let data;
+        try {
+          data = await response.json();
+        } catch (error) {
+          responseElement.textContent =
+            "Não consegui responder agora. Tente novamente em instantes.";
+          return;
+        }
 
         if (!response.ok) {
           responseElement.textContent =
-            "Erro:\n" + JSON.stringify(data, null, 2);
+            data?.error || "Não consegui responder agora. Tente novamente em instantes.";
           return;
         }
 

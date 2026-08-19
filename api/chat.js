@@ -83,7 +83,13 @@ export default async function handler(req, res) {
       }
     );
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (error) {
+      console.error("Resposta inválida do Gemini:", error.message);
+      return res.status(502).json({ error: "Não foi possível consultar o assistente agora" });
+    }
 
     if (!response.ok) {
       console.error("Erro Gemini:", data);

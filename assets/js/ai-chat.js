@@ -135,8 +135,13 @@ const AurantiusAIChat = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ history: requestHistory })
             });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Não foi possível responder agora.');
+            let data;
+            try {
+                data = await response.json();
+            } catch (error) {
+                throw new Error('Não consegui responder agora. Tente novamente em instantes.');
+            }
+            if (!response.ok) throw new Error(data?.error || 'Não foi possível responder agora.');
 
             if (typeof data.response !== 'string') {
                 throw new Error('Resposta inválida do assistente.');
@@ -189,8 +194,8 @@ const AurantiusAIChat = {
     },
 
     trimHistory(history) {
-        if (history.length <= 19) return history;
-        return [history[0], ...history.slice(-18)];
+        if (history.length <= 18) return history;
+        return [history[0], ...history.slice(-17)];
     },
 
     setLoading(isLoading) {
