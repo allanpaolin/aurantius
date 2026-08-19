@@ -179,3 +179,23 @@ function hasCommercialIntent(history) {
 
   return directPriceQuestion || /\b(?:me passa (?:o )?(?:whatsapp|link)|qual (?:é |e )?o (?:whatsapp|link)|quero (?:o )?(?:whatsapp|link)|onde falo com vocês|onde falo com voces|como entro em contato|quero falar com vocês|quero falar com voces|quero falar com (?:alguém|alguem)|quero conversar com (?:a )?(?:equipe|vocês|voces)|vamos conversar|quero contratar|vamos contratar|quero implementar|vamos implementar|quero colocar em prática|quero colocar em pratica|quero começar|quero comecar|quero avançar|vamos avançar|vamos avancar|como posso começar|como posso comecar|como faço para contratar|como faco para contratar|como fazemos para implementar|quero (?:um )?orçamento|quero (?:um )?orcamento|preciso de (?:um )?orçamento|preciso de (?:um )?orcamento|pode me passar um orçamento|pode me passar um orcamento|quanto custa (?:para|essa|a|o)|qual o preço|qual o preco|quero falar com (?:alguém|alguem) da equipe|quero conversar com (?:alguém|alguem) da equipe|quero avaliar (?:essa|a) solução|quero avaliar (?:essa|a) solucao|gostaria de avaliar (?:essa|a) solução|gostaria de avaliar (?:essa|a) solucao|é exatamente isso que quero implementar|e exatamente isso que quero implementar)\b/.test(visitorText);
 }
+
+function hasAcceptedContactOffer(history) {
+  const latestVisitorIndex = history.map((item) => item.role).lastIndexOf("user");
+  if (latestVisitorIndex < 1 || history[latestVisitorIndex - 1].role !== "model") return false;
+
+  const visitorMessage = normalizeText(history[latestVisitorIndex].content);
+  const previousAgentMessage = normalizeText(history[latestVisitorIndex - 1].content);
+  const isAcceptance = /^(?:sim|pode|pode ser|ok|vamos|vamos conversar|quero|tudo bem|com certeza)[.!?\s]*$/.test(visitorMessage);
+  const madeContactOffer = /\b(?:whatsapp|equipe|contato|falar com|conversar com|orçamento|orcamento|implementar|avançar|avancar|começar|comecar)\b/.test(previousAgentMessage);
+
+  return isAcceptance && madeContactOffer;
+}
+
+function normalizeText(text) {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+}

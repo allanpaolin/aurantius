@@ -167,6 +167,16 @@
     color: var(--white);
 }
 
+.ai-chat-whatsapp-link {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+}
+
+.ai-chat-whatsapp-link:hover { color: #6f5910; }
+
 .ai-chat-message.is-loading { color: var(--text-muted); font-style: italic; }
 
 .ai-chat-suggestions {
