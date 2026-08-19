@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste — Aurantius AI</title>
+</head>
+
+<body>
+
+  <h1>Teste do Agente Aurantius</h1>
+
+  <textarea id="message" rows="5" cols="50">Olá! Quem é você?</textarea>
+
+  <br><br>
+
+  <button id="testButton">Testar agente</button>
+
+  <h2>Resposta:</h2>
+
+  <pre id="response"></pre>
+
+  <script>
+    const button = document.getElementById("testButton");
+    const messageInput = document.getElementById("message");
+    const responseElement = document.getElementById("response");
+
+    button.addEventListener("click", async () => {
+      responseElement.textContent = "Pensando...";
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: messageInput.value
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          responseElement.textContent =
+            "Erro:\n" + JSON.stringify(data, null, 2);
+          return;
+        }
+
+        responseElement.textContent = data.response;
+
+      } catch (error) {
+        responseElement.textContent =
+          "Erro de conexão:\n" + error.message;
+      }
+    });
+  </script>
+
+</body>
+</html>
